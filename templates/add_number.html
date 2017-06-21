@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Add number{% endblock %}
+{% block body %}
+<div class="row">
+    <div class="col-lg-12">
+        <a class="btn btn-danger" href="/"><-Back</a>
+    </div>
+</div>
+<h1>Add Number</h1>
+    {% from "includes/_formhelpers.html" import render_field %}
+    <form method="POST" action="">
+        <div class="form-group">
+            {{ render_field(form.first_name, class_="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ render_field(form.last_name, class_="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ render_field(form.number, class_="form-control") }}
+        </div>
+        <p><input class="btn btn-primary" type="submit" value="Submit">
+     </form>
+{% endblock %}
