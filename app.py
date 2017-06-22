@@ -51,7 +51,7 @@ def add_number():
         db.session.add(book)
         db.session.commit()
         return redirect(url_for('main'))
-    return render_template('add_number.html', form=form)
+    return render_template('add_number.html', form=form, title='Add Number')
 
 
 # Edit number
@@ -69,7 +69,7 @@ def edit_number(id):
         print(form.number.data)
         db.session.commit()
         return redirect(url_for('main'))
-    return render_template('add_number.html', form=form)
+    return render_template('add_number.html', form=form, title='Edit Number')
 
 
 # Delete Number
