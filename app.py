@@ -23,7 +23,7 @@ class Book(db.Model):
 # home
 @app.route('/')
 def main():
-    result = db.session.query(Book)
+    result = db.session.query(Book).order_by(Book.id)
     try:
         result[0]
         return render_template("index.html", result=result)
@@ -52,6 +52,32 @@ def add_number():
         db.session.commit()
         return redirect(url_for('main'))
     return render_template('add_number.html', form=form)
+
+
+# Edit number
+@app.route('/edit_number/<int:id>', methods=['GET', 'POST'])
+def edit_number(id):
+    result = Book.query.filter_by(id=id).first()
+    form = NumberForm(request.form)
+    form.first_name.data = result.first_name
+    form.last_name.data = result.last_name
+    form.number.data = result.number
+    if request.method == 'POST' and form.validate():
+        result.first_name = request.form.get('first_name')
+        result.last_name = request.form.get('last_name')
+        result.number = request.form.get('number')
+        print(form.number.data)
+        db.session.commit()
+        return redirect(url_for('main'))
+    return render_template('add_number.html', form=form)
+
+
+# Delete Number
+@app.route('/delete_number/<int:id>', methods=['POST'])
+def delete_number(id):
+    Book.query.filter_by(id=id).delete()
+    db.session.commit()
+    return redirect(url_for('main'))
 
 if __name__ == '__main__':
     import os
